@@ -3,12 +3,11 @@
 
 ;;; Commentary:
 
-;; This requires the `ap/pocket-api' package, which is a fork of
-;; `pocket-api': <https://github.com/alphapapa/pocket-api.el>
+;; This requires <https://github.com/alphapapa/pocket-lib.el>
 
 ;;; Code:
 
-(require 'ap/pocket-api)
+(require 'pocket-lib)
 
 (require 'org-web-tools)
 
@@ -49,14 +48,14 @@ items are captured at a time."
   (unless org-pocket-capture-tag
     (user-error "Please set `org-pocket-capture-tag'"))
   (when-let ((file org-pocket-capture-file)
-             (items (alist-get 'list (pocket-api--get :tag org-pocket-capture-tag))))
+             (items (alist-get 'list (pocket-lib-get :tag org-pocket-capture-tag))))
     (cl-loop for item in items
              when (org-pocket--capture-item item :file file)
              sum 1 into count
              and when archive
              collect item into to-archive
              finally do (when to-archive
-                          (apply #'pocket-api--archive to-archive))
+                          (apply #'pocket-lib--archive to-archive))
              finally do (message "Captured %s items" count))))
 
 ;;;;; Helpers
