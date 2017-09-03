@@ -55,7 +55,7 @@ items are captured at a time."
              and when archive
              collect item into to-archive
              finally do (when to-archive
-                          (apply #'pocket-lib--archive to-archive))
+                          (apply #'pocket-lib-archive to-archive))
              finally do (message "Captured %s items" count))))
 
 ;;;;; Helpers
